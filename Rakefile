@@ -5,15 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "time_ext"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Extends the abilities of Ruby's built-in Time class by building on top of ActiveSupport.}
+    gem.description = %Q{Extends the abilities of Ruby's built-in Time class by building on top of ActiveSupport.}
     gem.email = "contact@jimeh.me"
     gem.homepage = "http://github.com/jimeh/time_ext"
     gem.authors = ["Jim Myhrberg"]
     gem.add_dependency "activesupport", ">= 2.3.0"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
