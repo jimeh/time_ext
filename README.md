@@ -15,11 +15,11 @@ This gem extends the abilities of Ruby's built-in Time class by building on top 
     #=> Beginning of this week, or next week depending on which date is closest
 
 
-## Notable Methods
+## Documentation
 
-The `round`, `floor`, and `ceil` methods were the main reason I created this gem. Each of them takes a unit argument, which can be one of the following: `:sec`, `:min`, `:hour`, `:day`, `:week`, `:month`, `:quarter`, and `:year`.
+A decently informative documentation is available [here][docs] on [rdoc.info][].
 
-For more, please refer to the source code or the spec tests for now.
+The main reason I created this gem was for the `round`, `floor`, and `ceil` methods. Each of them takes a unit argument, which can be one of the following: `:sec`, `:min`, `:hour`, `:day`, `:week`, `:month`, `:quarter`, and `:year`.
 
 
 ## To-Do
@@ -65,3 +65,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 [as]: http://as.rubyonrails.org/classes/ActiveSupport/CoreExtensions/Time/Calculations.html
+[docs]: http://rdoc.info/projects/jimeh/time_ext
+[rdoc.info]: http://rdoc.info/
