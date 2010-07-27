@@ -24,6 +24,7 @@ class Time
   alias :beginning_of_next :ceil
   alias :at_beginning_of_next :ceil
   
+  # Returns a new Time representing the start of the current or next unit specified (second by default) depending which is closest
   def round(unit = :sec)
     next_unit = self.ceil(unit)
     this_unit = self.floor(unit)
