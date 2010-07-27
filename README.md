@@ -41,8 +41,6 @@ For more, please refer to the source code or the spec tests for now.
 
 ## Copyright
 
-(The MIT License)
-
 Copyright (c) 2010 Jim Myhrberg.
 
 Permission is hereby granted, free of charge, to any person obtaining
