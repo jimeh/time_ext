@@ -32,10 +32,12 @@ describe "TimeExt" do
     @time.next_quarter.day.should   == 1
     @time.next_quarter.month.should == 10
     
-    @time.respond_to?(:floor).should be_true
-    @time.respond_to?(:beginning_of).should be_true
-    @time.respond_to?(:ceil).should be_true
-    @time.respond_to?(:beginning_of_next).should be_true
+    @time.respond_to?(:floor).should                be_true
+    @time.respond_to?(:beginning_of).should         be_true
+    @time.respond_to?(:ceil).should                 be_true
+    @time.respond_to?(:beginning_of_next).should    be_true
+    @time.respond_to?(:round).should                be_true
+    @time.respond_to?(:beginning_of_closest).should be_true
   end
 
   it "should floor and ceil to seconds" do
@@ -138,26 +140,6 @@ describe "TimeExt" do
     ceil.year.should  == @time.year
   end
   
-  it "should floor and ceil to quarters" do
-    floor = @time.floor(:quarter)
-    floor.usec.should  == 0
-    floor.sec.should   == 0
-    floor.min.should   == 0
-    floor.hour.should  == 0
-    floor.day.should   == 1
-    floor.month.should == 7
-    floor.year.should  == @time.year
-    
-    ceil = @time.ceil(:quarter)
-    ceil.usec.should  == 0
-    ceil.sec.should   == 0
-    ceil.min.should   == 0
-    ceil.hour.should  == 0
-    ceil.day.should   == 1
-    ceil.month.should == 10
-    ceil.year.should  == @time.year
-  end
-  
   it "should floor and ceil to months" do
     floor = @time.floor(:month)
     floor.usec.should  == 0
@@ -175,6 +157,26 @@ describe "TimeExt" do
     ceil.hour.should  == 0
     ceil.day.should   == 1
     ceil.month.should == @time.month + 1
+    ceil.year.should  == @time.year
+  end
+  
+  it "should floor and ceil to quarters" do
+    floor = @time.floor(:quarter)
+    floor.usec.should  == 0
+    floor.sec.should   == 0
+    floor.min.should   == 0
+    floor.hour.should  == 0
+    floor.day.should   == 1
+    floor.month.should == 7
+    floor.year.should  == @time.year
+    
+    ceil = @time.ceil(:quarter)
+    ceil.usec.should  == 0
+    ceil.sec.should   == 0
+    ceil.min.should   == 0
+    ceil.hour.should  == 0
+    ceil.day.should   == 1
+    ceil.month.should == 10
     ceil.year.should  == @time.year
   end
   
@@ -201,11 +203,11 @@ describe "TimeExt" do
   it "should round to seconds" do
     round = Time.local(2010, 8, 28, 15, 57, 17, 999999.999).round(:sec)
     round.usec.should == 0
-    round.sec.should == 18
+    round.sec.should  == 18
     
     round = Time.local(2010, 8, 28, 15, 57, 17, 111111.111).round(:sec)
     round.usec.should == 0
-    round.sec.should == 17
+    round.sec.should  == 17
   end
   
   it "should round to minutes" do
@@ -220,64 +222,64 @@ describe "TimeExt" do
   
   it "should round to hours" do
     round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:hour)
-    round.min.should == 0
+    round.min.should  == 0
     round.hour.should == 16
     
     round = Time.local(2010, 8, 28, 15, 17, 47, 999999.999).round(:hour)
-    round.min.should == 0
+    round.min.should  == 0
     round.hour.should == 15
   end
   
   it "should round to days" do
     round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:day)
     round.hour.should == 0
-    round.day.should == 29
+    round.day.should  == 29
     
     round = Time.local(2010, 8, 28, 11, 57, 47, 999999.999).round(:day)
     round.hour.should == 0
-    round.day.should == 28
+    round.day.should  == 28
   end
   
   it "should round to weeks" do
     round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:week)
     round.hour.should == 0
-    round.day.should == 30
+    round.day.should  == 30
     
     round = Time.local(2010, 8, 25, 15, 57, 47, 999999.999).round(:week)
     round.hour.should == 0
-    round.day.should == 23
-  end
-  
-  it "should round to quarters" do
-    round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:quarter)
-    round.hour.should == 0
-    round.day.should == 1
-    round.month.should == 10
-    
-    round = Time.local(2010, 8, 8, 15, 57, 47, 999999.999).round(:quarter)
-    round.hour.should == 0
-    round.day.should == 1
-    round.month.should == 7
+    round.day.should  == 23
   end
   
   it "should round to months" do
     round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:month)
-    round.day.should == 1
+    round.day.should   == 1
     round.month.should == 9
     
     round = Time.local(2010, 8, 8, 15, 57, 47, 999999.999).round(:month)
-    round.day.should == 1
+    round.day.should   == 1
     round.month.should == 8
+  end
+  
+  it "should round to quarters" do
+    round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:quarter)
+    round.hour.should  == 0
+    round.day.should   == 1
+    round.month.should == 10
+    
+    round = Time.local(2010, 8, 8, 15, 57, 47, 999999.999).round(:quarter)
+    round.hour.should  == 0
+    round.day.should   == 1
+    round.month.should == 7
   end
   
   it "should round to years" do
     round = Time.local(2010, 8, 28, 15, 57, 47, 999999.999).round(:year)
     round.month.should == 1
-    round.year.should == 2011
+    round.year.should  == 2011
     
     round = Time.local(2010, 4, 28, 15, 57, 47, 999999.999).round(:year)
     round.month.should == 1
-    round.year.should == 2010
+    round.year.should  == 2010
   end
   
 end
