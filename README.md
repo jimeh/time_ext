@@ -1,6 +1,32 @@
-# time_ext
+# Ruby Time Extensions
 
-Description goes here.
+This gem extends the abilities of Ruby's built-in Time class by building on top of what [ActiveSupport][as] already adds. Hence I must also warn that using this gem will load all of ActiveSupport at this time.
+
+
+## Installation
+
+    gem install time_ext
+
+
+## Basic Usage
+
+    require "time/ext"
+    Time.now.round(:week)
+    #=> Beginning of this week, or next week depending on which date is closest
+
+
+## Notable Methods
+
+The `round`, `floor`, and `ceil` methods were the main reason I created this gem. Each of them takes a unit argument, which can be one of the following: `:sec`, `:min`, `:hour`, `:day`, `:week`, `:month`, `:quarter`, and `:year`.
+
+For more, please refer to the source code or the spec tests for now.
+
+
+## To-Do
+
+* Improve ReadMe file.
+* Improve documentation.
+
 
 ## Note on Patches/Pull Requests
  
@@ -11,6 +37,7 @@ Description goes here.
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
+
 
 ## Copyright
 
@@ -36,3 +63,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+[as]: http://as.rubyonrails.org/classes/ActiveSupport/CoreExtensions/Time/Calculations.html
