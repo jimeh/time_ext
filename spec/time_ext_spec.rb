@@ -90,7 +90,67 @@ describe "TimeExt" do
     @now.floor(:year).month.should == 1
     @now.floor(:year).year.should  == @now.year
   end
-
+  
+  it "should ceil to seconds" do
+    @now.ceil(:sec).usec.should  == 0
+    @now.ceil(:sec).sec.should   == @now.sec + 1
+    @now.ceil(:sec).min.should   == @now.min
+    @now.ceil(:sec).hour.should  == @now.hour
+    @now.ceil(:sec).day.should   == @now.day
+    @now.ceil(:sec).month.should == @now.month
+    @now.ceil(:sec).year.should  == @now.year
+  end
+  
+  it "should ceil to minutes" do
+    @now.ceil(:min).usec.should  == 0
+    @now.ceil(:min).sec.should   == 0
+    @now.ceil(:min).min.should   == @now.min + 1
+    @now.ceil(:min).hour.should  == @now.hour
+    @now.ceil(:min).day.should   == @now.day
+    @now.ceil(:min).month.should == @now.month
+    @now.ceil(:min).year.should  == @now.year
+  end
+  
+  it "should ceil to hours" do
+    @now.ceil(:hour).usec.should  == 0
+    @now.ceil(:hour).sec.should   == 0
+    @now.ceil(:hour).min.should   == 0
+    @now.ceil(:hour).hour.should  == @now.hour + 1
+    @now.ceil(:hour).day.should   == @now.day
+    @now.ceil(:hour).month.should == @now.month
+    @now.ceil(:hour).year.should  == @now.year
+  end
+  
+  it "should ceil to days" do
+    @now.ceil(:day).usec.should  == 0
+    @now.ceil(:day).sec.should   == 0
+    @now.ceil(:day).min.should   == 0
+    @now.ceil(:day).hour.should  == 0
+    @now.ceil(:day).day.should   == @now.day + 1
+    @now.ceil(:day).month.should == @now.month
+    @now.ceil(:day).year.should  == @now.year
+  end
+  
+  it "should ceil to months" do
+    @now.ceil(:month).usec.should  == 0
+    @now.ceil(:month).sec.should   == 0
+    @now.ceil(:month).min.should   == 0
+    @now.ceil(:month).hour.should  == 0
+    @now.ceil(:month).day.should   == 1
+    @now.ceil(:month).month.should == @now.month + 1
+    @now.ceil(:month).year.should  == @now.year
+  end
+  
+  it "should ceil to years" do
+    @now.ceil(:year).usec.should  == 0
+    @now.ceil(:year).sec.should   == 0
+    @now.ceil(:year).min.should   == 0
+    @now.ceil(:year).hour.should  == 0
+    @now.ceil(:year).day.should   == 1
+    @now.ceil(:year).month.should == 1
+    @now.ceil(:year).year.should  == @now.year + 1
+  end
+  
 end
 
 
