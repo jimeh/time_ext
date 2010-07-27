@@ -39,7 +39,7 @@ For more, please refer to the source code or the spec tests for now.
 * Send me a pull request. Bonus points for topic branches.
 
 
-## Copyright
+## License and Copyright
 
 Copyright (c) 2010 Jim Myhrberg.
 
