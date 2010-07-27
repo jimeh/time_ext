@@ -10,7 +10,7 @@ begin
     gem.email = "contact@jimeh.me"
     gem.homepage = "http://github.com/jimeh/time_ext"
     gem.authors = ["Jim Myhrberg"]
-    gem.add_dependency "activesupport", ">= 2.1.0"
+    gem.add_dependency "activesupport", ">= 2.3.0"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
