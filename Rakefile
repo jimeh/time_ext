@@ -35,6 +35,10 @@ task :spec => :check_dependencies
 
 task :default => :spec
 
+task :console do
+  exec "irb -r spec/spec_helper"
+end
+
 begin
   require 'yard'
   YARD::Rake::YardocTask.new
