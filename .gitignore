@@ -21,4 +21,4 @@ pkg
 ## PROJECT::SPECIFIC
 .yardoc/*
 *.gemspec
-docs/*
+doc/*
