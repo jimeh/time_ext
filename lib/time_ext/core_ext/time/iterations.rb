@@ -25,7 +25,7 @@ class Time
     end
   end
   
-  # Used togeter with #each to specify end of interation.
+  # Used togeter with #each and other iteration methods to specify end of interation.
   def until(time, &block)
     time = time.to_time if time.is_a?(::Date)
     @until = time
@@ -33,6 +33,17 @@ class Time
     self
   end
   alias :till :until
+  
+  # Used together with #each and other interation methods to specify start of iteration, and end will be current object.
+  def from(time, &block)
+    time = time.to_time if time.is_a?(::Date)
+    method, args = @method_chain.pop if block_given?
+    if !method.nil?
+      time.until(self).send(method, *args, &block)
+    else
+      time.until(self)
+    end
+  end
   
   # Executes passed block for each "unit" of time specified, with a new time object for each interval passed to the block.
   def each(unit, options = {}, &block)

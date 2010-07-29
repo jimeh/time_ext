@@ -60,4 +60,10 @@ describe "Time Iterations" do
     @now.until(@now - 6.hours).map_each(:hour) { |time| time }.should == match
   end
   
+  it "should iterate over time objects with #map_each and #from via method chaining" do
+    match = (1..6).map { |i| @now + i.hours }
+    (@now + 6.hours).map_each_hour.from(@now) { |time| time }.should == match
+    (@now + 6.hours).from(@now).map_each(:hour) { |time| time }.should == match
+  end
+  
 end
