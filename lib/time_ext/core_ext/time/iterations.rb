@@ -49,12 +49,8 @@ class Time
   def until(time, &block)
     time = time.to_time if time.is_a?(::Date)
     @until = time
-    if block_given?
-      call_chain(block)
-    else
-      add_to_chain(:until, time)
-      self
-    end
+    return call_chain(block) if block_given?
+    self
   end
   alias :till :until
   
