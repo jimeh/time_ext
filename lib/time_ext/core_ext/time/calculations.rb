@@ -159,11 +159,6 @@ class Time
     since((quarters * 3).months)
   end
   
-  # Returns a new Time representing the start of the unit specified (defaults to second).
-  def beginning_of(unit = :sec)
-    send("beginning_of_#{unit}")
-  end
-  
   # Returns a new Time representing the end of the unit specified (defaults to second).
   def end_of(unit = :sec)
     send("end_of_#{unit}")
