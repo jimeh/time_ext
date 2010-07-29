@@ -44,13 +44,13 @@ class Time
   
   # Short-hand for seconds_ago(1).
   def prev_second
-    ago(1)
+    seconds_ago(1)
   end
   alias :prev_sec :prev_second
   
   # Short-hand for seconds_since(1).
   def next_second
-    since(1)
+    seconds_since(1)
   end
   alias :next_sec :next_second
   
