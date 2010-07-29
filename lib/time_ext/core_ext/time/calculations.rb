@@ -32,6 +32,16 @@ class Time
   end
   alias :beginning_of_closest :round
   
+  # Returns a new Time representing the previoius unit specified (defaults to second).
+  def prev(unit = :sec)
+    send("prev_#{unit}")
+  end
+  
+  # Returns a new Time representing the next unit specified (defaults to second).
+  def next(unit = :sec)
+    send("next_#{unit}")
+  end
+  
   # Short-hand for seconds_ago(1).
   def prev_second
     ago(1)
@@ -147,6 +157,16 @@ class Time
   # Returns a new Time representing the time a number of specified quarters (3 months) in the future.
   def quarters_since(quarters)
     since((quarters * 3).months)
+  end
+  
+  # Returns a new Time representing the start of the unit specified (defaults to second).
+  def beginning_of(unit = :sec)
+    send("beginning_of_#{unit}")
+  end
+  
+  # Returns a new Time representing the end of the unit specified (defaults to second).
+  def end_of(unit = :sec)
+    send("end_of_#{unit}")
   end
   
   # Returns a new Time representing the start of the second, XX:XX:XX.000000 (.000000000 in ruby1.9).

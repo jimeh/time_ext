@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "TimeExt" do
+describe "Time Calculations" do
   
   before(:each) do
     @time = Time.local(2010, 8, 28, 15, 57, 17, 78430)
