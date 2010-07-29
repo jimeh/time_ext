@@ -25,6 +25,15 @@ class Time
     end
   end
   
+  # Used togeter with #each to specify end of interation.
+  def until(time, &block)
+    time = time.to_time if time.is_a?(::Date)
+    @until = time
+    return call_chain(block) if block_given?
+    self
+  end
+  alias :till :until
+  
   # Executes passed block for each "unit" of time specified, with a new time object for each interval passed to the block.
   def each(unit, options = {}, &block)
     iterate(unit, options.merge(:map_result => false), &block)
@@ -44,15 +53,6 @@ class Time
   def map_beginning_of_each(unit, options = {}, &block)
     iterate(unit, options.merge(:map_result => true, :beginning_of => true), &block)
   end
-  
-  # Used togeter with #each to specify end of interation.
-  def until(time, &block)
-    time = time.to_time if time.is_a?(::Date)
-    @until = time
-    return call_chain(block) if block_given?
-    self
-  end
-  alias :till :until
   
   # Dynamically define convenience methods, like #each_hour instead of #each(:hour).
   [:year, :month, :day, :hour, :min, :minute, :sec, :second].each do |unit|
