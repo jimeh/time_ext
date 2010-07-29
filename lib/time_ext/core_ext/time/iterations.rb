@@ -55,12 +55,13 @@ class Time
   end
   
   # Dynamically define convenience methods, like #each_hour instead of #each(:hour).
-  [:year, :month, :day, :hour, :min, :minute, :sec, :second].each do |unit|
+  [:year, :month, :day, :hour, :min, :sec].each do |unit|
     [:each, :beginning_of_each, :map_each, :map_beginning_of_each].each do |method|
-      called_unit = (unit == :minute) ? :min : (unit == :second) ? :sec : unit
       define_method "#{method}_#{unit}" do |*args, &block|
-        send(method, called_unit, *args, &block)
+        send(method, unit, *args, &block)
       end
+      class_eval { alias :"#{method}_minute" :"#{method}_min" } if unit == :min
+      class_eval { alias :"#{method}_second" :"#{method}_sec" } if unit == :sec
     end
   end
   
