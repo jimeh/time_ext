@@ -14,7 +14,7 @@ This gem extends the abilities of Ruby's built-in Time class by building on top 
 
     require "time/ext" # or "time_ext"
     Time.utc(2010, 6, 19).round(:month) #=> Thu Jul 01 00:00:00 UTC 2010
-    #=> Beginning of this week, or next week depending on which date is closest
+    #=> Beginning of this month, or beginning of next month depending on which is closest
     Time.now.each_hour.until(6.hours.from_now) { |t| puts t.to_s }
     #=> Prints the time at one hour interals from now till 6 hours from now
 
