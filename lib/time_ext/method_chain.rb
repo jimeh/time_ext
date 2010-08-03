@@ -1,4 +1,5 @@
 module TimeExt
+  # Allows iterators' #until and #from methods to chain back to the parent iteration method.
   module MethodChain
     
     def add_to_chain(method, *args, &block)
