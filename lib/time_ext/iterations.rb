@@ -60,6 +60,7 @@ module TimeExt
     def map_each(unit, options = {}, &block)
       iterate(unit, options.merge(:map_result => true), &block)
     end
+    alias :map :map_each
 
     # Executes passed block for each "unit" of time specified, returning an array with the return values from passed block. Additionally the time object passed into the block is set to the beginning of specified "unit".
     def map_beginning_of_each(unit, options = {}, &block)
@@ -68,7 +69,7 @@ module TimeExt
 
     # Dynamically define convenience methods, like #each_hour instead of #each(:hour).
     [:year, :month, :day, :hour, :min, :sec].each do |unit|
-      [:each, :beginning_of_each, :map_each, :map_beginning_of_each].each do |method|
+      [:each, :beginning_of_each, :map_each, :map_beginning_of_each, :map].each do |method|
         define_method "#{method}_#{unit}" do |*args, &block|
           send(method, unit, *args, &block)
         end
