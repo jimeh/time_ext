@@ -4,7 +4,7 @@ module TimeExt
 
     # Used by #each, #map_each and similar methods to iterate over ranges of time.
     def iterate(unit, options = {}, &block)
-      options.reverse_merge!(:map_result => false, :beginning_of => false, :include_start => false)
+      options.reverse_merge!(:map_result => false, :beginning_of => false, :include_start => false, :include_end => true)
       if block_given?
         units = [:year, :month, :day, :hour, :min, :sec, :usec]
         parent_unit = units[units.index(unit)-1]
@@ -13,14 +13,14 @@ module TimeExt
           @until ||= (!parent_unit.nil?) ? self.send("#{parent_unit}s_since", 1) : self.send("#{unit}s_since", 1)
         else
           time = self.beginning_of(@of_the)
-          @until = self.end_of(@of_the)
-          options.merge!(:beginning_of => true, :include_start => true)
+          @until = self.next(@of_the).beginning_of(@of_the)
+          options.merge!(:beginning_of => true, :include_start => true, :include_end => false)
         end
         direction = (self < @until) ? :f : :b
         succ_method = (direction == :f) ? "next_#{unit}" : "prev_#{unit}"
         time = time.beginning_of(unit) if options[:beginning_of]
         time = time.send(succ_method) if !options[:include_start]
-        @until = @until.prev(unit).end_of(unit) if options[:include_start] && @of_the.nil?
+        @until = @until.prev(unit).end_of(unit) if !options[:include_end]
         results = []
         while (direction == :f && time <= @until) || (direction == :b && time >= @until)
           options[:map_result] ? results << yield(time) : yield(time)
