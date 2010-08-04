@@ -68,4 +68,23 @@ describe "Time Iterations" do
     (@now + 6.hours).from(@now).map_each(:hour) { |time| time }.should == match
   end
   
+  it "should iterate over time objects with #map_each and #of_the via method chaining" do
+    match = (0..23).map { |i| ((@now - (@now.hour).hours) + i.hours).beginning_of_hour }
+    @now.map_each_hour.of_the(:day) { |time| time }.should == match
+    @now.map_each_hour.of_the_day { |time| time }.should == match
+    match = @now.beginning_of_month.map_beginning_of_each_hour(:include_start => true).until(@now.next_month.beginning_of_month) { |time| time }
+    @now.map_each_hour.of_the(:month) { |time| time }.should == match
+  end
+  
+  it "should iterate and respect the include_start option" do
+    match = (0..5).map { |i| @now + i.hours }
+    @now.map_each_hour(:include_start => true).until(@now + 6.hours) { |time| time }.should == match
+  end
+  
+  it "should iterate and respect the beginning_of option" do
+    match = (1..6).map { |i| @now.beginning_of_hour + i.hours }
+    @now.map_beginning_of_each_hour.until(@now.beginning_of_hour + 6.hours) { |time| time }.should == match
+    @now.map_each_hour(:beginning_of => true).until(@now.beginning_of_hour + 6.hours) { |time| time }.should == match
+  end
+  
 end
