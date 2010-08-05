@@ -1,6 +1,5 @@
 class Time
-  include TimeExt::MethodChain
-  include TimeExt::BackwardsCompatibility
+  include TimeExt::Support
   include TimeExt::Calculations
   include TimeExt::Iterations
   
