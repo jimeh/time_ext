@@ -75,7 +75,6 @@ module TimeExt
     def map_each(unit, options = {}, &block)
       iterate(unit, options.merge(:map_result => true), &block)
     end
-    alias :map :map_each
 
     # Executes passed block for each "unit" of time specified, returning an array with the return values from passed block. Additionally the time object passed into the block is set to the beginning of specified "unit".
     def map_beginning_of_each(unit, options = {}, &block)
