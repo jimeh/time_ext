@@ -52,8 +52,6 @@ describe "Time Iterations" do
     match = (1..6).map { |i| @now + i.hours }
     @now.map_each_hour.until(@now + 6.hours) { |time| time }.should == match
     @now.until(@now + 6.hours).map_each(:hour) { |time| time }.should == match
-    # check so the #map alias for #map_each works
-    @now.map_hour.until(@now + 6.hours) { |time| time }.should == match
   end
   
   it "should iterate over time objects backwards with #until set in the past" do
