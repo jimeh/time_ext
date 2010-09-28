@@ -83,7 +83,7 @@ module TimeExt
 
     # Dynamically define convenience methods, like #each_hour instead of #each(:hour).
     [:year, :month, :day, :hour, :min, :sec].each do |unit|
-      [:each, :beginning_of_each, :map_each, :map_beginning_of_each, :map].each do |method|
+      [:each, :beginning_of_each, :map_each, :map_beginning_of_each].each do |method|
         define_method "#{method}_#{unit}" do |*args, &block|
           send(method, unit, *args, &block)
         end
