@@ -10,9 +10,11 @@ begin
     gem.email = "contact@jimeh.me"
     gem.homepage = "http://github.com/jimeh/time_ext"
     gem.authors = ["Jim Myhrberg"]
-    gem.add_dependency "activesupport", ">= 2.3.0"
-    gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.add_development_dependency "yard", ">= 0"
+    gem.add_dependency 'activesupport', '>= 2.3.0'
+    gem.add_dependency 'i18n', '>= 0.4.2'
+    gem.add_development_dependency 'jeweler', '>= 1.4.0'
+    gem.add_development_dependency 'rspec', '>= 2.1.0'
+    gem.add_development_dependency 'yard', '>= 0.6.3'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -34,9 +36,11 @@ task :spec => :check_dependencies
 
 task :default => :spec
 
+desc "Start an irb console with TimeExt pre-loaded."
 task :console do
   exec "irb -r spec/spec_helper"
 end
+task :c => :console
 
 begin
   require 'yard'
