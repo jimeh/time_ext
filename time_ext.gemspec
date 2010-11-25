@@ -21,4 +21,7 @@ Gem::Specification.new do |s|
   
   s.add_runtime_dependency 'activesupport', '>= 2.3.0'
   s.add_runtime_dependency 'i18n', '>= 0.4.2'
+  
+  s.add_development_dependency 'rspec', '>= 2.1.0'
+  s.add_development_dependency 'yard', '>= 0.6.3'
 end
