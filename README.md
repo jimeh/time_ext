@@ -99,5 +99,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 [as]: http://as.rubyonrails.org/classes/ActiveSupport/CoreExtensions/Time/Calculations.html
-[docs]: http://rdoc.info/projects/jimeh/time_ext
+[docs]: http://rdoc.info/gems/time_ext/frames
 [rdoc.info]: http://rdoc.info/
