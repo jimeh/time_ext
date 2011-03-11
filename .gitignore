@@ -16,6 +16,7 @@ tmtags
 ## PROJECT::GENERAL
 coverage
 rdoc
+Gemfile.lock
 pkg/*
 *.gem
 .bundle
