@@ -1,9 +1,12 @@
-require 'active_support'
-require 'active_support/time' unless Time.respond_to?(:days_in_month) # support both Active Support 2.x and 3.x
-require 'active_support/core_ext/time/calculations' unless Time.new.respond_to?(:ago) # fixes rare loading issue
+# encoding: utf-8
+
+# Support both Active Support 2.x and 3.x, and also address rare loading
+# issue.
+require 'active_support/time' unless Time.respond_to?(:days_in_month)
+require 'active_support/core_ext/time/calculations' unless Time.new.respond_to?(:ago)
 
 class Time
-  include TimeExt::Support
+  # Include TimeExt modules into Time object.
   include TimeExt::Calculations
   include TimeExt::Iterations
   

@@ -1,6 +1,9 @@
 require 'bundler'
 Bundler::GemHelper.install_tasks
 
+require 'rake/testtask'
+require 'rake/clean'
+
 
 #
 # Rspec
@@ -20,17 +23,53 @@ task :default => :spec
 
 
 #
-# Yard
+# Rocco
 #
 
-begin
-  require 'yard'
-  YARD::Rake::YardocTask.new
-rescue LoadError
-  task :yardoc do
-    abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"
+require 'rocco/tasks'
+Rocco::make 'docs/'
+
+desc 'Build rocco docs'
+task :docs => :rocco
+directory 'docs/'
+
+desc 'Build docs and open in browser for the reading'
+task :read => :docs do
+  sh 'open docs/lib/time_ext.html'
+end
+
+# Make index.html a copy of rocco.html
+file 'docs/index.html' => 'docs/lib/time_ext.html' do |f|
+  cp 'docs/lib/time_ext.html', 'docs/index.html', :preserve => true
+end
+task :docs => 'docs/index.html'
+CLEAN.include 'docs/index.html'
+
+# Alias for docs task
+task :doc => :docs
+
+# GITHUB PAGES ===============================================================
+
+desc 'Update gh-pages branch'
+task :pages => ['docs/.git', :docs] do
+  rev = `git rev-parse --short HEAD`.strip
+  Dir.chdir 'docs' do
+    sh "git add *.html"
+    sh "git commit -m 'rebuild pages from #{rev}'" do |ok,res|
+      if ok
+        verbose { puts "gh-pages updated" }
+        sh "git push -q o HEAD:gh-pages"
+      end
+    end
   end
 end
+
+# Update the pages/ directory clone
+file 'docs/.git' => ['docs/'] do |f|
+  sh "cd docs && git init -q && git remote add o ../.git" if !File.exist?(f.name)
+  sh "cd docs && git fetch -q o && git reset -q --hard o/gh-pages && touch ."
+end
+CLOBBER.include 'docs/.git'
 
 
 #
