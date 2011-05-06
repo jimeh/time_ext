@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>iterations.rb</title>
+  <link rel="stylesheet" href="http://github.com/jashkenas/docco/raw/0.3.0/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="../time/ext.html">ext.rb</a>
+          <a class="source" href="../time_ext.html">time_ext.rb</a>
+          <a class="source" href="calculations.html">calculations.rb</a>
+          <a class="source" href="core_ext/numeric.html">numeric.rb</a>
+          <a class="source" href="core_ext/time.html">time.rb</a>
+          <a class="source" href="iterations.html">iterations.rb</a>
+          <a class="source" href="version.html">version.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>iterations.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">module</span> <span class="nn">TimeExt</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Allows you to iterate over Time objects with <code>#each</code> and other
+methods almost as if it was an Array or Hash.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">module</span> <span class="nn">Iterations</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Iterator_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Iterator_Methods">&#182;</a>
+        </div>
+        <h3>Iterator Methods</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Executes passed block for each <code>unit</code> of time specified, with
+a new time object for each interval passed to the block.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">each</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">iterate</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">:map_result</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Executes passed block for each <code>unit</code> of time specified, with
+a new time object set to the beginning of <code>unit</code> for each
+interval passed to the block.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">beginning_of_each</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">iterate</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">:map_result</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">:beginning_of</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Executes passed block for each <code>unit</code> of time specified,
+returning an array with the return values from the passed block.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">map_each</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">iterate</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">:map_result</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Executes passed block for each <code>unit</code> of time specified,
+returning an array with the return values from passed block.
+Additionally the time object passed into the block is set to
+the beginning of specified <code>unit</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">map_beginning_of_each</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">iterate</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="ss">:map_result</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:beginning_of</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Limiter_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Limiter_Methods">&#182;</a>
+        </div>
+        <h3>Limiter Methods</h3>
+
+<p>Usually chained with an iterator method to specify at which point
+in time the iterator should stop.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Used togeter with <code>#each</code> and other iteration methods to specify
+end of interation.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">until</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">to_time</span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="o">::</span><span class="no">Date</span><span class="p">)</span>
+      <span class="vi">@until</span> <span class="o">=</span> <span class="n">time</span>
+      <span class="k">return</span> <span class="n">call_chain</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
+      <span class="nb">self</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:till</span> <span class="ss">:until</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Used together with <code>#each</code> and other interation methods to specify
+start of iteration, and end will be current object.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">from</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">to_time</span> <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="o">::</span><span class="no">Date</span><span class="p">)</span>
+      <span class="nb">method</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="vi">@method_chain</span><span class="o">.</span><span class="n">pop</span> <span class="k">if</span> <span class="nb">block_given?</span>
+      <span class="k">if</span> <span class="o">!</span><span class="nb">method</span><span class="o">.</span><span class="n">nil?</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Let&rsquo;s you iterate over every unit specified in the <code>#each</code> or
+<code>#map_each</code> call for the specified unit.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">of_the</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="vi">@of_the</span> <span class="o">=</span> <span class="n">unit</span>
+      <span class="k">return</span> <span class="n">call_chain</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
+      <span class="nb">self</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:of</span> <span class="ss">:of_the</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Shorthand_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Shorthand_Methods">&#182;</a>
+        </div>
+        <h3>Shorthand Methods</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>Dynamically define convenience methods, like <code>#each_hour</code> as a
+shorthand for <code>#each(:hour)</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="o">[</span><span class="ss">:year</span><span class="p">,</span> <span class="ss">:month</span><span class="p">,</span> <span class="ss">:day</span><span class="p">,</span> <span class="ss">:hour</span><span class="p">,</span> <span class="ss">:min</span><span class="p">,</span> <span class="ss">:sec</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">unit</span><span class="o">|</span>
+      <span class="o">[</span><span class="ss">:each</span><span class="p">,</span> <span class="ss">:beginning_of_each</span><span class="p">,</span> <span class="ss">:map_each</span><span class="p">,</span> <span class="ss">:map_beginning_of_each</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+        <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
+          <span class="nb">send</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">end</span>
+        <span class="nb">class_eval</span> <span class="p">{</span> <span class="k">alias</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_minute&quot;</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_min&quot;</span> <span class="p">}</span> <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="ss">:min</span>
+        <span class="nb">class_eval</span> <span class="p">{</span> <span class="k">alias</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_second&quot;</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_sec&quot;</span> <span class="p">}</span> <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="ss">:sec</span>
+      <span class="k">end</span>
+      <span class="o">[</span><span class="ss">:of_the</span><span class="p">,</span> <span class="ss">:of</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+        <span class="n">define_method</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
+          <span class="nb">send</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+        <span class="k">end</span>
+        <span class="nb">class_eval</span> <span class="p">{</span> <span class="k">alias</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_minute&quot;</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_min&quot;</span> <span class="p">}</span> <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="ss">:min</span>
+        <span class="nb">class_eval</span> <span class="p">{</span> <span class="k">alias</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_second&quot;</span> <span class="ss">:&quot;</span><span class="si">#{</span><span class="nb">method</span><span class="si">}</span><span class="ss">_sec&quot;</span> <span class="p">}</span> <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="ss">:sec</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    
+    <span class="kp">private</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Private_Helper_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Private_Helper_Methods">&#182;</a>
+        </div>
+        <h3>Private Helper Methods</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Default options for <code>#iterate</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">default_options</span>
+      <span class="p">{</span> <span class="ss">:map_result</span>    <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+        <span class="ss">:beginning_of</span>  <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+        <span class="ss">:end_of</span>        <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+        <span class="ss">:include_start</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+        <span class="ss">:include_end</span>   <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>Used by <code>#each</code>, <code>#map_each</code> and similar methods to iterate over
+ranges of time.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">opts</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="n">options</span> <span class="o">=</span> <span class="n">default_options</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+      </pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p>Perform the grunt work of iteration.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">if</span> <span class="nb">block_given?</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="o">[</span><span class="ss">:year</span><span class="p">,</span> <span class="ss">:month</span><span class="p">,</span> <span class="ss">:day</span><span class="p">,</span> <span class="ss">:hour</span><span class="p">,</span> <span class="ss">:min</span><span class="p">,</span> <span class="ss">:sec</span><span class="p">,</span> <span class="ss">:usec</span><span class="o">]</span>
+        <span class="n">parent_unit</span> <span class="o">=</span> <span class="n">units</span><span class="o">[</span><span class="n">units</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span>
+        <span class="k">if</span> <span class="vi">@of_the</span><span class="o">.</span><span class="n">nil?</span>
+          <span class="n">time</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">clone</span>
+          <span class="vi">@until</span> <span class="o">||=</span> <span class="p">(</span><span class="o">!</span><span class="n">parent_unit</span><span class="o">.</span><span class="n">nil?</span><span class="p">)</span> <span class="p">?</span> <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">parent_unit</span><span class="si">}</span><span class="s2">s_since&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">s_since&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span>
+          <span class="n">time</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">beginning_of</span><span class="p">(</span><span class="vi">@of_the</span><span class="p">)</span>
+          <span class="vi">@until</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="vi">@of_the</span><span class="p">)</span><span class="o">.</span><span class="n">beginning_of</span><span class="p">(</span><span class="vi">@of_the</span><span class="p">)</span>
+          <span class="n">options</span><span class="o">.</span><span class="n">merge!</span><span class="p">(</span><span class="ss">:beginning_of</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:include_start</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:include_end</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">)</span>
+        <span class="k">end</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="p">(</span><span class="nb">self</span> <span class="o">&lt;</span> <span class="vi">@until</span><span class="p">)</span> <span class="p">?</span> <span class="ss">:f</span> <span class="p">:</span> <span class="ss">:b</span>
+        <span class="n">succ_method</span> <span class="o">=</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="ss">:f</span><span class="p">)</span> <span class="p">?</span> <span class="s2">&quot;next_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">:</span> <span class="s2">&quot;prev_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">beginning_of</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:beginning_of</span><span class="o">]</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">succ_method</span><span class="p">)</span> <span class="k">if</span> <span class="o">!</span><span class="n">options</span><span class="o">[</span><span class="ss">:include_start</span><span class="o">]</span>
+        <span class="vi">@until</span> <span class="o">=</span> <span class="vi">@until</span><span class="o">.</span><span class="n">prev</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span><span class="o">.</span><span class="n">end_of</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="k">if</span> <span class="o">!</span><span class="n">options</span><span class="o">[</span><span class="ss">:include_end</span><span class="o">]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="o">[]</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="ss">:f</span> <span class="o">&amp;&amp;</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="vi">@until</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="ss">:b</span> <span class="o">&amp;&amp;</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="vi">@until</span><span class="p">)</span>
+          <span class="n">options</span><span class="o">[</span><span class="ss">:map_result</span><span class="o">]</span> <span class="p">?</span> <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="k">yield</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="p">:</span> <span class="k">yield</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+          <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">succ_method</span><span class="p">)</span>
+        <span class="k">end</span>
+        <span class="n">options</span><span class="o">[</span><span class="ss">:map_result</span><span class="o">]</span> <span class="p">?</span> <span class="n">results</span> <span class="p">:</span> <span class="nb">self</span>
+      </pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>If a block is not given, add itself to the chain list to be
+executed when the chain ends.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">else</span>
+        <span class="n">add_to_chain</span><span class="p">(</span><span class="ss">:iterate</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="nb">self</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
+        </div>
+        <p>Enables chaining of iterator methods with</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">add_to_chain</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="vi">@method_chain</span> <span class="o">||=</span> <span class="o">[]</span>
+      <span class="vi">@method_chain</span> <span class="o">&lt;&lt;</span> <span class="o">[</span><span class="nb">method</span><span class="o">.</span><span class="n">to_sym</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">block</span><span class="o">]</span>
+    <span class="k">end</span>
+    
+    <span class="k">def</span> <span class="nf">call_chain</span><span class="p">(</span><span class="n">custom_block</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+      <span class="nb">method</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">iblock</span> <span class="o">=</span> <span class="vi">@method_chain</span><span class="o">.</span><span class="n">pop</span>
+      <span class="k">return</span> <span class="kp">nil</span> <span class="k">if</span> <span class="nb">method</span><span class="o">.</span><span class="n">nil?</span>
+      <span class="n">iblock</span> <span class="o">=</span> <span class="n">custom_block</span> <span class="k">if</span> <span class="o">!</span><span class="n">custom_block</span><span class="o">.</span><span class="n">nil?</span>
+      <span class="nb">method</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">iblock</span> <span class="o">=</span> <span class="k">yield</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">iblock</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">iblock</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

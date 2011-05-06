@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>time.rb</title>
+  <link rel="stylesheet" href="http://github.com/jashkenas/docco/raw/0.3.0/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="../../time/ext.html">ext.rb</a>
+          <a class="source" href="../../time_ext.html">time_ext.rb</a>
+          <a class="source" href="../calculations.html">calculations.rb</a>
+          <a class="source" href="numeric.html">numeric.rb</a>
+          <a class="source" href="time.html">time.rb</a>
+          <a class="source" href="../iterations.html">iterations.rb</a>
+          <a class="source" href="../version.html">version.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>time.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Support both Active Support 2.x and 3.x, and also address rare loading
+issue.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;active_support/time&#39;</span> <span class="k">unless</span> <span class="no">Time</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:days_in_month</span><span class="p">)</span>
+<span class="nb">require</span> <span class="s1">&#39;active_support/core_ext/time/calculations&#39;</span> <span class="k">unless</span> <span class="no">Time</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:ago</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Time</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Include TimeExt modules into Time object.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="kp">include</span> <span class="no">TimeExt</span><span class="o">::</span><span class="no">Calculations</span>
+  <span class="kp">include</span> <span class="no">TimeExt</span><span class="o">::</span><span class="no">Iterations</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Aliases to keep available method names to a standard pattern.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">alias</span> <span class="ss">:secs_ago</span> <span class="ss">:ago</span>
+  <span class="k">alias</span> <span class="ss">:seconds_ago</span> <span class="ss">:ago</span>
+  <span class="k">alias</span> <span class="ss">:secs_since</span> <span class="ss">:since</span>
+  <span class="k">alias</span> <span class="ss">:seconds_since</span> <span class="ss">:since</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

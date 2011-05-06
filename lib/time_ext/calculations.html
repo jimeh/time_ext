@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>calculations.rb</title>
+  <link rel="stylesheet" href="http://github.com/jashkenas/docco/raw/0.3.0/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="../time/ext.html">ext.rb</a>
+          <a class="source" href="../time_ext.html">time_ext.rb</a>
+          <a class="source" href="calculations.html">calculations.rb</a>
+          <a class="source" href="core_ext/numeric.html">numeric.rb</a>
+          <a class="source" href="core_ext/time.html">time.rb</a>
+          <a class="source" href="iterations.html">iterations.rb</a>
+          <a class="source" href="version.html">version.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>calculations.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">module</span> <span class="nn">TimeExt</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Adds an even greater extent of calculation methods on top of those already
+provided by ActiveSupport.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">module</span> <span class="nn">Calculations</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Public_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Public_Methods">&#182;</a>
+        </div>
+        <h3>Public Methods</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the unit specified (second
+by default).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">floor</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;beginning_of_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:beginning_of</span> <span class="ss">:floor</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of</span> <span class="ss">:floor</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the next unit specified (second by default).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">ceil</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;next_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;beginning_of_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:beginning_of_next</span> <span class="ss">:ceil</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_next</span> <span class="ss">:ceil</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the current or next unit
+specified (second by default) depending which is closest</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">round</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="n">next_unit</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+      <span class="n">this_unit</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+      <span class="p">(</span><span class="nb">self</span> <span class="o">-</span> <span class="n">this_unit</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">next_unit</span> <span class="o">-</span> <span class="nb">self</span><span class="p">)</span> <span class="p">?</span> <span class="n">this_unit</span> <span class="p">:</span> <span class="n">next_unit</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:beginning_of_closest</span> <span class="ss">:round</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the previoius unit specified (defaults
+to second).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">&quot;prev_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the next unit specified (defaults to
+second).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">&quot;next_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Short-hand for seconds_ago(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_second</span>
+      <span class="n">seconds_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:prev_sec</span> <span class="ss">:prev_second</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Short-hand for seconds_since(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next_second</span>
+      <span class="n">seconds_since</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:next_sec</span> <span class="ss">:next_second</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Short-hand for minutes_ago(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_minute</span>
+      <span class="n">minutes_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:prev_min</span> <span class="ss">:prev_minute</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>Short-hand for minutes_since(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next_minute</span>
+      <span class="n">minutes_since</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:next_min</span> <span class="ss">:next_minute</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>Short-hand for hours_ago(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_hour</span>
+      <span class="n">hours_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Short-hand for hours_since(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next_hour</span>
+      <span class="n">hours_since</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Short-hand for days_ago(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_day</span>
+      <span class="n">days_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>Short-hand for days_since(1).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next_day</span>
+      <span class="n">days_since</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the given day in the
+previous week (default is Monday).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_week</span><span class="p">(</span><span class="n">day</span> <span class="o">=</span> <span class="ss">:monday</span><span class="p">)</span>
+      <span class="n">weeks_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">beginning_of_week</span><span class="o">.</span><span class="n">since</span><span class="p">(</span><span class="n">days_into_week</span><span class="o">[</span><span class="n">day</span><span class="o">].</span><span class="n">day</span><span class="p">)</span><span class="o">.</span><span class="n">change</span><span class="p">(</span><span class="ss">:hour</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>Short-hand for quarters_since(1).beginning_of_quarter.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">next_quarter</span>
+      <span class="n">quarters_since</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">beginning_of_quarter</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
+        </div>
+        <p>Short-hand for quarters_ago(1).beginning_of_quarter.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">prev_quarter</span>
+      <span class="n">quarters_ago</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">beginning_of_quarter</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-20'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-20">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified minutes
+ago.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">minutes_ago</span><span class="p">(</span><span class="n">minutes</span><span class="p">)</span>
+      <span class="n">ago</span><span class="p">(</span><span class="n">minutes</span><span class="o">.</span><span class="n">minutes</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:mins_ago</span> <span class="ss">:minutes_ago</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-21'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-21">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified minutes
+in the future.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">minutes_since</span><span class="p">(</span><span class="n">minutes</span><span class="p">)</span>
+      <span class="n">since</span><span class="p">(</span><span class="n">minutes</span><span class="o">.</span><span class="n">minutes</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:mins_since</span> <span class="ss">:minutes_since</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-22'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-22">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified hours
+ago.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">hours_ago</span><span class="p">(</span><span class="n">hours</span><span class="p">)</span>
+      <span class="n">ago</span><span class="p">(</span><span class="n">hours</span><span class="o">.</span><span class="n">hours</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-23'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified hours in
+the future.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">hours_since</span><span class="p">(</span><span class="n">hours</span><span class="p">)</span>
+      <span class="n">since</span><span class="p">(</span><span class="n">hours</span><span class="o">.</span><span class="n">hours</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-24'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified days ago.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">days_ago</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+      <span class="n">ago</span><span class="p">(</span><span class="n">days</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified days in
+the future.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">days_since</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+      <span class="n">since</span><span class="p">(</span><span class="n">days</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-26'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-26">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified weeks
+ago.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">weeks_ago</span><span class="p">(</span><span class="n">weeks</span><span class="p">)</span>
+      <span class="n">ago</span><span class="p">(</span><span class="n">weeks</span><span class="o">.</span><span class="n">weeks</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-27'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-27">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified weeks in
+the future.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">weeks_since</span><span class="p">(</span><span class="n">weeks</span><span class="p">)</span>
+      <span class="n">since</span><span class="p">(</span><span class="n">weeks</span><span class="o">.</span><span class="n">weeks</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-28'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-28">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified quarters
+(3 months) ago.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">quarters_ago</span><span class="p">(</span><span class="n">quarters</span><span class="p">)</span>
+      <span class="n">ago</span><span class="p">((</span><span class="n">quarters</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">months</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-29'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-29">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the time a number of specified quarters
+(3 months) in the future.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">quarters_since</span><span class="p">(</span><span class="n">quarters</span><span class="p">)</span>
+      <span class="n">since</span><span class="p">((</span><span class="n">quarters</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">months</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-30'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-30">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the end of the unit specified (defaults
+to second).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">end_of</span><span class="p">(</span><span class="n">unit</span> <span class="o">=</span> <span class="ss">:sec</span><span class="p">)</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">&quot;end_of_</span><span class="si">#{</span><span class="n">unit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-31'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-31">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the second, XX:XX:XX.000000
+(.000000000 in ruby1.9).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">beginning_of_second</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:beginning_of_sec</span> <span class="ss">:beginning_of_second</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_sec</span> <span class="ss">:beginning_of_second</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_second</span> <span class="ss">:beginning_of_second</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-32'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-32">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the end of the second, XX:XX:XX.999999
+(.999999999 in ruby1.9).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">end_of_second</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">999999</span><span class="o">.</span><span class="mi">999</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:end_of_sec</span> <span class="ss">:end_of_second</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-33'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-33">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the minute (XX:XX:00).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">beginning_of_minute</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:sec</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:beginning_of_min</span> <span class="ss">:beginning_of_minute</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_min</span> <span class="ss">:beginning_of_minute</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_minute</span> <span class="ss">:beginning_of_minute</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-34'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-34">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the end of the hour, XX:XX:59.999999 (.999999999 in ruby1.9).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">end_of_minute</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:sec</span> <span class="o">=&gt;</span> <span class="mi">59</span><span class="p">,</span> <span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">999999</span><span class="o">.</span><span class="mi">999</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:end_of_min</span> <span class="ss">:end_of_minute</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-35'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-35">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the start of the hour (XX:00:00).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">beginning_of_hour</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:min</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:sec</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="k">alias</span> <span class="ss">:at_beginning_of_hour</span> <span class="ss">:beginning_of_hour</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-36'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-36">&#182;</a>
+        </div>
+        <p>Returns a new Time representing the end of the hour, XX:59:59.999999
+(.999999999 in ruby1.9).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">end_of_hour</span>
+      <span class="n">change</span><span class="p">(</span><span class="ss">:min</span> <span class="o">=&gt;</span> <span class="mi">59</span><span class="p">,</span> <span class="ss">:sec</span> <span class="o">=&gt;</span> <span class="mi">59</span><span class="p">,</span> <span class="ss">:usec</span> <span class="o">=&gt;</span> <span class="mi">999999</span><span class="o">.</span><span class="mi">999</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="kp">private</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-Private_Helper_Methods'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Private_Helper_Methods">&#182;</a>
+        </div>
+        <h3>Private Helper Methods</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-38'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-38">&#182;</a>
+        </div>
+        <p>Definitive list of days in the week.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">days_into_week</span>
+      <span class="n">defined?</span><span class="p">(</span><span class="no">DAYS_INTO_WEEK</span><span class="p">)</span> <span class="p">?</span> <span class="no">DAYS_INTO_WEEK</span> <span class="p">:</span> <span class="p">{</span> <span class="ss">:monday</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">:tuesday</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:wednesday</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="ss">:thursday</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">:friday</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span> <span class="ss">:saturday</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="ss">:sunday</span> <span class="o">=&gt;</span> <span class="mi">6</span> <span class="p">}</span>
+    <span class="k">end</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-39'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-39">&#182;</a>
+        </div>
+        <p>Definitive list of days for each month of the year.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">common_year_days_in_month</span>
+      <span class="n">defined?</span><span class="p">(</span><span class="no">COMMON_YEAR_DAYS_IN_MONTH</span><span class="p">)</span> <span class="p">?</span> <span class="no">COMMON_YEAR_DAYS_IN_MONTH</span> <span class="p">:</span> <span class="o">[</span><span class="kp">nil</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="o">]</span>
+    <span class="k">end</span>
+  
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
