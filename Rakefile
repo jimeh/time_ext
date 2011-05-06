@@ -26,8 +26,13 @@ task :default => :spec
 # Rocco
 #
 
-require 'rocco/tasks'
-Rocco::make 'docs/'
+begin
+  require 'rocco/tasks'
+  Rocco::make 'docs/'
+rescue LoadError
+  warn "#$! -- rocco tasks not loaded."
+  task :rocco
+end
 
 desc 'Build rocco docs'
 task :docs => :rocco
@@ -54,7 +59,7 @@ desc 'Update gh-pages branch'
 task :pages => ['docs/.git', :docs] do
   rev = `git rev-parse --short HEAD`.strip
   Dir.chdir 'docs' do
-    sh "git add *.html"
+    sh "git add *"
     sh "git commit -m 'rebuild pages from #{rev}'" do |ok,res|
       if ok
         verbose { puts "gh-pages updated" }
@@ -65,7 +70,7 @@ task :pages => ['docs/.git', :docs] do
 end
 
 # Update the pages/ directory clone
-file 'docs/.git' => ['docs/'] do |f|
+file 'docs/.git' => ['docs/', '.git/refs/heads/gh-pages'] do |f|
   sh "cd docs && git init -q && git remote add o ../.git" if !File.exist?(f.name)
   sh "cd docs && git fetch -q o && git reset -q --hard o/gh-pages && touch ."
 end
