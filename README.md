@@ -1,4 +1,6 @@
 # Ruby Time Extensions
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimeh%2Ftime_ext.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimeh%2Ftime_ext?ref=badge_shield)
+
 
 This gem extends the abilities of Ruby's built-in Time class by building on top of what [ActiveSupport][as] already adds. Hence I must also warn that using this gem will load all of ActiveSupport at this time.
 
@@ -101,3 +103,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [as]: http://as.rubyonrails.org/classes/ActiveSupport/CoreExtensions/Time/Calculations.html
 [docs]: http://rdoc.info/gems/time_ext/frames
 [rdoc.info]: http://rdoc.info/
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjimeh%2Ftime_ext.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjimeh%2Ftime_ext?ref=badge_large)
